@@ -1,3 +1,4 @@
+mvn dependency:copy-dependencies -DoutputDirectory=lib   -DincludeScope=compile
 
 
 create 'batch', {NAME => 'foo', VERSIONS => 1}, 
@@ -321,7 +322,10 @@ sh acc_run_wx.sh 1 209715200   100 1  5 1 5  > new_acc_times_100_250MB_5_1.txt
 
 
 
-
+cd /home/work/wx/hbase-operations-with-java/
+MY_CLASSPATH=/home/work/wx/hbase-operations-with-java/lib/*:/home/work/wx/hbase-operations-with-java/target/original-hcg-1.0-SNAPSHOT.jar
+MY_CLASSPATH=$MY_CLASSPATH:`hadoop classpath`:`hbase classpath`
+java  -cp $MY_CLASSPATH  cn.ngsoc.hbase.client.MultiThreadedScanClientExample  1 1 1 1 1 1 1 1
 
 
 

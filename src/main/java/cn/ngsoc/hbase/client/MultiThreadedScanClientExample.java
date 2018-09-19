@@ -30,7 +30,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -146,7 +146,7 @@ public class MultiThreadedScanClientExample extends Configured implements Tool {
         }
         numOperations = 1;
 
-        final TableName tableName = TableName.valueOf("batch");
+        final TableName tableName = TableName.valueOf("tjtcm_20180211_3.71_9.03_1.1_1_DP_wx");
 
         System.out.println("#####################numOperations:"+numOperations);
         System.out.println("#####################value_size:"+value_size);
@@ -437,19 +437,17 @@ public class MultiThreadedScanClientExample extends Configured implements Tool {
     public static void main(String[] args) throws Exception {
         long currentTime = System.currentTimeMillis();
         List<byte[]> rowkeys = new ArrayList<>();
-        LOG.info("#######################Hbase Random Batch write start:");
-        ToolRunner.run(new MultiThreadedClientExample(Integer.parseInt(args[0]),rowkeys), args);
-        for (byte[] a: rowkeys){
-            System.out.println(a);
+
+        String fileName = "/home/work/wx/random.rowkey";
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(fileName))));
+        String line = "";
+        while ((line = br.readLine()) != null) {
+            rowkeys.add(line.getBytes());
         }
-        System.out.println("#######################Hbase Random Batch write ALL_TIME: \t"+(System.currentTimeMillis() - currentTime));
-        LOG.info("#######################Hbase Random Batch write end:");
 
-
-        System.out.println("####################### 随机 key 采集策略, rowkey 汇总之后并打散 , 总随机 key 为线程数 * row/随机因子 : \t" + rowkeys.size());
-
-        LOG.info("#######################Hbase Random Batch Scanner start:");
-        currentTime = System.currentTimeMillis();
+        for (byte[] a: rowkeys){
+            System.out.println("HBASE_ROW_KEY############\t" + new String(a));
+        }
 
         ToolRunner.run(new MultiThreadedScanClientExample(Integer.parseInt(args[0]),rowkeys), args);
 
