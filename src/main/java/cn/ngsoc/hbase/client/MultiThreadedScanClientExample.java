@@ -146,7 +146,7 @@ public class MultiThreadedScanClientExample extends Configured implements Tool {
         }
         numOperations = 1;
 
-        final TableName tableName = TableName.valueOf("tjtcm_20180211_3.71_9.03_1.1_1_DP_wx");
+        final TableName tableName = TableName.valueOf("traceinfo_test_wx");
 
         System.out.println("#####################numOperations:"+numOperations);
         System.out.println("#####################value_size:"+value_size);

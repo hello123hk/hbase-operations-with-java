@@ -318,7 +318,12 @@ sh acc_run_wx.sh 1 209715200   100 1  5 1 5  > new_acc_times_100_250MB_5_1.txt
 
 
 
+hbase shell <<EOF 
+disable 'traceinfo_test_wx'
+drop 'traceinfo_test_wx'
+EOF
 
+hbase org.apache.hadoop.hbase.util.RegionSplitter traceinfo_test_wx HexStringSplit -c 24 -f  f1
 
 
 
